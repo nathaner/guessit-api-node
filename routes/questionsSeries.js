@@ -1,6 +1,10 @@
 const express = require("express");
 const router = express.Router();
+const { QuestionsSerie } = require("../models/questionsSerie");
 
 router.get("/", async (req, res) => {
-  res.send("hello world");
+  const questionsSeries = await QuestionsSerie.find().sort("title");
+  res.send(questionsSeries);
 });
+
+module.exports = router;
