@@ -16,6 +16,7 @@
     "joi": "^17.2.1",
     "mongoose": "^5.10.4",
     "mongoose-slug-generator": "^1.0.4",
+    "supertest": "^4.0.2",
     "winston": "^3.3.3"
   }
 }

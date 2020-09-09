@@ -23,6 +23,12 @@ const questionsSerieSchema = mongoose.Schema({
     type: Date,
     default: Date.now(),
   },
+  questions: {
+    type: Array,
+    required: true,
+    minlength: 1,
+    maxlength: 100,
+  },
 });
 
 const QuestionsSerie = mongoose.model("QuestionSerie", questionsSerieSchema);
@@ -33,6 +39,7 @@ function validateQuestionsSerie(questionsSerie) {
     author: Joi.string().required().max(50),
     slug: Joi.string(),
     creation_date: Joi.date(),
+    questions: Joi.array().required().min(1).max(100),
   };
 
   return Joi.validate(questionsSerie, schema);
