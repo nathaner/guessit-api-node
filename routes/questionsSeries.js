@@ -7,4 +7,15 @@ router.get("/", async (req, res) => {
   res.send(questionsSeries);
 });
 
+router.get("/:id", async (req, res) => {
+  const questionsSerie = await QuestionsSerie.findById(req.params.id).select(
+    "-__v"
+  );
+
+  if (!questionsSerie)
+    return res.status(404).send("No Questions Serie exists with the given ID.");
+
+  res.send(questionsSerie);
+});
+
 module.exports = router;

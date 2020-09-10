@@ -45,6 +45,6 @@ function validateQuestionsSerie(questionsSerie) {
   return Joi.validate(questionsSerie, schema);
 }
 
-module.exports.questionsSerieSchema = questionsSerieSchema;
-module.exports.QuestionsSerie = QuestionsSerie;
-module.exports.validate = validateQuestionsSerie;
+exports.questionsSerieSchema = questionsSerieSchema;
+exports.QuestionsSerie = QuestionsSerie;
+exports.validate = validateQuestionsSerie;

@@ -1,8 +1,43 @@
 const mongoose = require("mongoose");
 const request = require("supertest");
-const QuestionsSerie = require("../../models/questionsSerie");
+const { QuestionsSerie } = require("../../models/questionsSerie");
 
 let server;
+
+const data = [
+  {
+    title: "questionsSerie1",
+    author: "author1",
+    questions: [
+      {
+        id: 1,
+        question1: "question1",
+        answer1: "answer1",
+      },
+      {
+        id: 2,
+        question2: "question2",
+        answer2: "answer2",
+      },
+    ],
+  },
+  {
+    title: "questionsSerie2",
+    author: "author2",
+    questions: [
+      {
+        id: 1,
+        question1: "question1",
+        answer1: "answer1",
+      },
+      {
+        id: 2,
+        question2: "question2",
+        answer2: "answer2",
+      },
+    ],
+  },
+];
 
 describe("/api/questionsseries", () => {
   beforeEach(() => (server = require("../../index")));
@@ -15,48 +50,28 @@ describe("/api/questionsseries", () => {
 
   describe("GET /", () => {
     it("should return all questionsSeries", async () => {
-      const questionsSeries = [
-        {
-          id: 1,
-          title: "questionsSerie1",
-          author: "author1",
-          questions: [
-            {
-              id: 1,
-              question1: "question1",
-              answer1: "answer1",
-            },
-            {
-              id: 2,
-              question2: "question2",
-              answer2: "answer2",
-            },
-          ],
-        },
-        {
-          id: 2,
-          title: "questionsSerie2",
-          author: "author2",
-          questions: [
-            {
-              id: 1,
-              question1: "question1",
-              answer1: "answer1",
-            },
-            {
-              id: 2,
-              question2: "question2",
-              answer2: "answer2",
-            },
-          ],
-        },
-      ];
-
-      await QuestionsSerie.insertMany(questionsSeries);
+      await QuestionsSerie.insertMany(data);
 
       const res = await request(server).get("/api/questionsseries");
 
       expect(res.status).toBe(200);
+      expect(res.body.length).toBe(2);
+      expect(res.body.some((q) => q.title === "questionsSerie1")).toBeTruthy();
+      expect(res.body.some((q) => q.title === "questionsSerie2")).toBeTruthy();
+    });
+  });
+
+  describe("GET /:id", () => {
+    it("should return a questionsSerie if valid id is passed", async () => {
+      const questionsSerie = new QuestionsSerie(data[0]);
+      await questionsSerie.save();
+
+      const res = await request(server).get(
+        "/api/questionsseries/" + questionsSerie._id
+      );
+
+      expect(res.status).toBe(200);
+      expect(res.body).toHaveProperty("title", questionsSerie.title);
     });
   });
 });
