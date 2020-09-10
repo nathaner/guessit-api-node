@@ -1,4 +1,5 @@
 {
   "port": 3900,
-  "db": "mongodb://localhost/guessit"
+  "db": "mongodb://localhost/guessit",
+  "jwtPrivateKey": "1234"
 }

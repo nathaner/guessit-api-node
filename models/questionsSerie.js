@@ -4,7 +4,7 @@ const slug = require("mongoose-slug-generator");
 
 mongoose.plugin(slug);
 
-const questionsSerieSchema = mongoose.Schema({
+const questionsSerieSchema = new mongoose.Schema({
   title: {
     type: String,
     required: true,
@@ -45,6 +45,6 @@ function validateQuestionsSerie(questionsSerie) {
   return Joi.validate(questionsSerie, schema);
 }
 
-exports.questionsSerieSchema = questionsSerieSchema;
-exports.QuestionsSerie = QuestionsSerie;
-exports.validate = validateQuestionsSerie;
+module.exports.questionsSerieSchema = questionsSerieSchema;
+module.exports.QuestionsSerie = QuestionsSerie;
+module.exports.validate = validateQuestionsSerie;

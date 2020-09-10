@@ -4,12 +4,13 @@ const logger = require("./startup/logger");
 
 const app = express();
 
-require("./startup/cors");
+require("./startup/cors")(app);
 require("./startup/routes")(app);
 require("./startup/db")();
+require("./startup/config")();
 
 const port = process.env.PORT || config.get("port");
 
 const server = app.listen(port, () => logger.info(`Listening on port ${port}`));
 
-exports = server;
+module.exports = server;
