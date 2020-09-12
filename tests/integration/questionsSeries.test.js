@@ -73,5 +73,16 @@ describe("/api/questionsseries", () => {
       expect(res.status).toBe(200);
       expect(res.body).toHaveProperty("title", questionsSerie.title);
     });
+
+    it("should return 404 if an invalid id is passed", async () => {
+      const res = await request(server).get("/api/questionsseries/1");
+      expect(res.status).toBe(404);
+    });
+
+    it("should return 404 if no questionsSeries exist with the given id", async () => {
+      const id = mongoose.Types.ObjectId();
+      const res = await request(server).get("/api/questionsseries/" + id);
+      expect(res.status).toBe(404);
+    });
   });
 });
