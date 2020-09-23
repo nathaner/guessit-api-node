@@ -45,7 +45,7 @@ describe("/api/questionsseries", () => {
   afterEach(async () => {
     await server.close();
 
-    await QuestionsSerie.remove({});
+    await QuestionsSerie.deleteMany({});
   });
 
   describe("GET /", () => {
