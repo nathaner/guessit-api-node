@@ -85,4 +85,40 @@ describe("/api/questionsseries", () => {
       expect(res.status).toBe(404);
     });
   });
+
+  describe("POST /", () => {
+    let token;
+    let title;
+    let author;
+    let question;
+
+    const exec = async () => {
+      return await request(server)
+        .post("/api/questionsSets")
+        .set("x-auth-token", token)
+        .send({ title, author, question });
+    };
+
+    beforeEach(() => {
+      token = new User().generateAuthToken();
+      title = "questionsSet1";
+      author = "author1";
+      question = { question: "question1", answer: "answer1" };
+    });
+
+    it("sould return 401 is user is not logged in", async () => {
+      token = "";
+
+      const res = await exec();
+
+      expect(res.status).toBe(401);
+    });
+
+    it("should return the questionsSet if it is valid", () => {
+      const res = exec();
+
+      expect(res.body).toHaveProperty("_id");
+      expect(res.body).toHaveProperty("title", "questionsSet1");
+    });
+  });
 });
